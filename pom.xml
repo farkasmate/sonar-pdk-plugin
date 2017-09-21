@@ -2,13 +2,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.sonarsource.plugins.example</groupId>
-  <artifactId>sonar-example-plugin</artifactId>
+  <groupId>com.masabi.sonar.plugin.pdk</groupId>
+  <artifactId>sonar-pdk-plugin</artifactId>
   <packaging>sonar-plugin</packaging>
   <version>0.1-SNAPSHOT</version>
 
-  <name>Example Plugin for SonarQube</name>
-  <description>Example of Plugin for SonarQube: Foo Language, FooLint, Custom Metrics and MeasureComputers</description>
+  <name>PDK Plugin for SonarQube</name>
+  <description>A Puppet plugin relying on Puppet Development Kit</description>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -54,7 +54,7 @@
         <version>1.16</version>
         <extensions>true</extensions>
         <configuration>
-          <pluginClass>org.sonarsource.plugins.example.ExamplePlugin</pluginClass>
+          <pluginClass>com.masabi.sonar.plugin.pdk.PdkPlugin</pluginClass>
         </configuration>
       </plugin>
       <plugin>

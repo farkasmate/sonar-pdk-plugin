@@ -1,4 +1,5 @@
 /*
+ * PDK Plugin for SonarQube - based on
  * Example Plugin for SonarQube
  * Copyright (C) 2009-2016 SonarSource SA
  * mailto:contact AT sonarsource DOT com
@@ -17,7 +18,7 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.sonarsource.plugins.example.rules;
+package com.masabi.sonar.plugin.pdk.rules;
 
 import java.io.File;
 import java.util.Arrays;
@@ -37,7 +38,7 @@ import org.sonar.api.config.Settings;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
-import org.sonarsource.plugins.example.languages.FooLanguage;
+import com.masabi.sonar.plugin.pdk.languages.FooLanguage;
 
 /**
  * The goal of this Sensor is to load the results of an analysis performed by a fictive external tool named: FooLint
@@ -48,7 +49,7 @@ public class FooLintIssuesLoaderSensor implements Sensor {
 
   private static final Logger LOGGER = Loggers.get(FooLintIssuesLoaderSensor.class);
 
-  protected static final String REPORT_PATH_KEY = "sonar.foolint.reportPath";
+  protected static final String REPORT_PATH_KEY = "sonar.pdklint.reportPath";
 
   protected final Settings settings;
   protected final FileSystem fileSystem;
@@ -199,8 +200,8 @@ public class FooLintIssuesLoaderSensor implements Sensor {
 
       // as the goal of this example is not to demonstrate how to parse an xml file we return an hard coded list of FooError
 
-      FooLintError fooError1 = new FooLintError("ExampleRule1", "More precise description of the error", "src/MyClass.foo", 5);
-      FooLintError fooError2 = new FooLintError("ExampleRule2", "More precise description of the error", "src/MyClass.foo", 9);
+      FooLintError fooError1 = new FooLintError("ExampleRule1", "More precise description of the error", "manifests/init.pp", 1);
+      FooLintError fooError2 = new FooLintError("ExampleRule2", "More precise description of the error", "manifests/init.pp", 3);
 
       return Arrays.asList(fooError1, fooError2);
     }

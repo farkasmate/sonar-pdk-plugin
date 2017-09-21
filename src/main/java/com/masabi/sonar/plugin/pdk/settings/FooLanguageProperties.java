@@ -1,4 +1,5 @@
 /*
+ * PDK Plugin for SonarQube - based on
  * Example Plugin for SonarQube
  * Copyright (C) 2009-2016 SonarSource SA
  * mailto:contact AT sonarsource DOT com
@@ -17,7 +18,7 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.sonarsource.plugins.example.settings;
+package com.masabi.sonar.plugin.pdk.settings;
 
 import static java.util.Arrays.asList;
 
@@ -28,8 +29,8 @@ import org.sonar.api.resources.Qualifiers;
 
 public class FooLanguageProperties {
 
-  public static final String FILE_SUFFIXES_KEY = "sonar.foo.file.suffixes";
-  public static final String FILE_SUFFIXES_DEFAULT_VALUE = ".foo";
+  public static final String FILE_SUFFIXES_KEY = "sonar.pdk.file.suffixes";
+  public static final String FILE_SUFFIXES_DEFAULT_VALUE = ".pp,.rb,.epp,.erb,.yaml,.yml,.eyaml,.json";
 
   private FooLanguageProperties() {
     // only statics
@@ -38,7 +39,7 @@ public class FooLanguageProperties {
   public static List<PropertyDefinition> getProperties() {
     return asList(PropertyDefinition.builder(FILE_SUFFIXES_KEY)
       .defaultValue(FILE_SUFFIXES_DEFAULT_VALUE)
-      .category("Foo")
+      .category("Pdk")
       .name("File Suffixes")
       .description("Comma-separated list of suffixes for files to analyze.")
       .onQualifiers(Qualifiers.PROJECT)

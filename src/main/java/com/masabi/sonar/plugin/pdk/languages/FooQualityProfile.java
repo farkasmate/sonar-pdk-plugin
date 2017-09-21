@@ -1,4 +1,5 @@
 /*
+ * PDK Plugin for SonarQube - based on
  * Example Plugin for SonarQube
  * Copyright (C) 2009-2016 SonarSource SA
  * mailto:contact AT sonarsource DOT com
@@ -17,12 +18,12 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.sonarsource.plugins.example.languages;
+package com.masabi.sonar.plugin.pdk.languages;
 
 import static org.sonar.api.rules.RulePriority.BLOCKER;
 import static org.sonar.api.rules.RulePriority.CRITICAL;
 import static org.sonar.api.rules.RulePriority.MAJOR;
-import static org.sonarsource.plugins.example.rules.FooLintRulesDefinition.REPO_KEY;
+import static com.masabi.sonar.plugin.pdk.rules.FooLintRulesDefinition.REPO_KEY;
 
 import org.sonar.api.profiles.ProfileDefinition;
 import org.sonar.api.profiles.RulesProfile;

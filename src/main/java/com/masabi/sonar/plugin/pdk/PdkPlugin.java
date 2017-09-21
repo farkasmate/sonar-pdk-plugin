@@ -1,4 +1,5 @@
 /*
+ * PDK Plugin for SonarQube - based on
  * Example Plugin for SonarQube
  * Copyright (C) 2009-2016 SonarSource SA
  * mailto:contact AT sonarsource DOT com
@@ -17,23 +18,30 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.sonarsource.plugins.example.hooks;
+package com.masabi.sonar.plugin.pdk;
 
-import org.sonar.api.ce.posttask.PostProjectAnalysisTask;
-import org.sonar.api.ce.posttask.QualityGate;
-import org.sonar.api.utils.log.Loggers;
+import static java.util.Arrays.asList;
+
+import org.sonar.api.Plugin;
+import org.sonar.api.config.PropertyDefinition;
+import com.masabi.sonar.plugin.pdk.languages.FooLanguage;
+import com.masabi.sonar.plugin.pdk.languages.FooQualityProfile;
+import com.masabi.sonar.plugin.pdk.rules.FooLintIssuesLoaderSensor;
+import com.masabi.sonar.plugin.pdk.rules.FooLintRulesDefinition;
+import com.masabi.sonar.plugin.pdk.settings.FooLanguageProperties;
 
 /**
- * Logs the Quality gate status in Compute Engine when analysis is finished (browse
- * Administration > Projects > Background Tasks).
- * A real use-case would be to send an email or to notify an IRC channel.
+ * This class is the entry point for all extensions. It is referenced in pom.xml.
  */
-public class DisplayQualityGateStatus implements PostProjectAnalysisTask {
+public class PdkPlugin implements Plugin {
+
   @Override
-  public void finished(ProjectAnalysis analysis) {
-    QualityGate gate = analysis.getQualityGate();
-    if (gate != null) {
-      Loggers.get(getClass()).info("Quality gate is " + gate.getStatus());
-    }
+  public void define(Context context) {
+    context.addExtensions(asList(
+      FooLanguage.class,
+      FooLintIssuesLoaderSensor.class,
+      FooLintRulesDefinition.class,
+      FooQualityProfile.class,
+      FooLanguageProperties.getProperties()));
   }
 }

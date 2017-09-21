@@ -1,4 +1,5 @@
 /*
+ * PDK Plugin for SonarQube - based on
  * Example Plugin for SonarQube
  * Copyright (C) 2009-2016 SonarSource SA
  * mailto:contact AT sonarsource DOT com
@@ -17,21 +18,21 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.sonarsource.plugins.example.rules;
+package com.masabi.sonar.plugin.pdk.rules;
 
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.api.server.rule.RulesDefinitionXmlLoader;
-import org.sonarsource.plugins.example.languages.FooLanguage;
+import com.masabi.sonar.plugin.pdk.languages.FooLanguage;
 
 public final class FooLintRulesDefinition implements RulesDefinition {
 
-  private static final String PATH_TO_RULES_XML = "/example/foolint-rules.xml";
+  private static final String PATH_TO_RULES_XML = "/example/pdklint-rules.xml";
 
-  protected static final String KEY = "foolint";
-  protected static final String NAME = "FooLint";
+  protected static final String KEY = "pdklint";
+  protected static final String NAME = "PdkLint";
 
   public static final String REPO_KEY = FooLanguage.KEY + "-" + KEY;
   protected static final String REPO_NAME = FooLanguage.KEY + "-" + NAME;

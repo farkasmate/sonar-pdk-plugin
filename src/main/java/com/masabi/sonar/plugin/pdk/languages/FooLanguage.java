@@ -1,4 +1,5 @@
 /*
+ * PDK Plugin for SonarQube - based on
  * Example Plugin for SonarQube
  * Copyright (C) 2009-2016 SonarSource SA
  * mailto:contact AT sonarsource DOT com
@@ -17,7 +18,7 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.sonarsource.plugins.example.languages;
+package com.masabi.sonar.plugin.pdk.languages;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,15 +26,15 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.sonar.api.config.Settings;
 import org.sonar.api.resources.AbstractLanguage;
-import org.sonarsource.plugins.example.settings.FooLanguageProperties;
+import com.masabi.sonar.plugin.pdk.settings.FooLanguageProperties;
 
 /**
  * This class defines the fictive Foo language.
  */
 public final class FooLanguage extends AbstractLanguage {
 
-  public static final String NAME = "Foo";
-  public static final String KEY = "foo";
+  public static final String NAME = "Pdk";
+  public static final String KEY = "pdk";
 
   private final Settings settings;
 
