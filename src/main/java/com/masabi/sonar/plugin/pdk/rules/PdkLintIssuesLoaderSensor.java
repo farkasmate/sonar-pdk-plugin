@@ -38,16 +38,11 @@ import org.sonar.api.config.Settings;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
-import com.masabi.sonar.plugin.pdk.languages.FooLanguage;
+import com.masabi.sonar.plugin.pdk.languages.PdkLanguage;
 
-/**
- * The goal of this Sensor is to load the results of an analysis performed by a fictive external tool named: FooLint
- * Results are provided as an xml file and are corresponding to the rules defined in 'rules.xml'.
- * To be very abstract, these rules are applied on source files made with the fictive language Foo.
- */
-public class FooLintIssuesLoaderSensor implements Sensor {
+public class PdkLintIssuesLoaderSensor implements Sensor {
 
-  private static final Logger LOGGER = Loggers.get(FooLintIssuesLoaderSensor.class);
+  private static final Logger LOGGER = Loggers.get(PdkLintIssuesLoaderSensor.class);
 
   protected static final String REPORT_PATH_KEY = "sonar.pdklint.reportPath";
 
@@ -58,15 +53,15 @@ public class FooLintIssuesLoaderSensor implements Sensor {
   /**
    * Use of IoC to get Settings, FileSystem, RuleFinder and ResourcePerspectives
    */
-  public FooLintIssuesLoaderSensor(final Settings settings, final FileSystem fileSystem) {
+  public PdkLintIssuesLoaderSensor(final Settings settings, final FileSystem fileSystem) {
     this.settings = settings;
     this.fileSystem = fileSystem;
   }
 
   @Override
   public void describe(final SensorDescriptor descriptor) {
-    descriptor.name("FooLint Issues Loader Sensor");
-    descriptor.onlyOnLanguage(FooLanguage.KEY);
+    descriptor.name("PDK Issues Loader Sensor");
+    descriptor.onlyOnLanguage(PdkLanguage.KEY);
   }
 
   protected String reportPathKey() {
@@ -91,21 +86,21 @@ public class FooLintIssuesLoaderSensor implements Sensor {
       try {
         parseAndSaveResults(analysisResultsFile);
       } catch (XMLStreamException e) {
-        throw new IllegalStateException("Unable to parse the provided FooLint file", e);
+        throw new IllegalStateException("Unable to parse the provided file", e);
       }
     }
   }
 
   protected void parseAndSaveResults(final File file) throws XMLStreamException {
-    LOGGER.info("(mock) Parsing 'FooLint' Analysis Results");
-    FooLintAnalysisResultsParser parser = new FooLintAnalysisResultsParser();
-    List<FooLintError> errors = parser.parse(file);
-    for (FooLintError error : errors) {
+    LOGGER.info("(mock) Parsing Analysis Results");
+    PdkLintAnalysisResultsParser parser = new PdkLintAnalysisResultsParser();
+    List<PdkLintError> errors = parser.parse(file);
+    for (PdkLintError error : errors) {
       getResourceAndSaveIssue(error);
     }
   }
 
-  private void getResourceAndSaveIssue(final FooLintError error) {
+  private void getResourceAndSaveIssue(final PdkLintError error) {
     LOGGER.debug(error.toString());
 
     InputFile inputFile = fileSystem.inputFile(
@@ -140,22 +135,22 @@ public class FooLintIssuesLoaderSensor implements Sensor {
   }
 
   private static String getRepositoryKeyForLanguage(String languageKey) {
-    return languageKey.toLowerCase() + "-" + FooLintRulesDefinition.KEY;
+    return languageKey.toLowerCase() + "-" + PdkLintRulesDefinition.KEY;
   }
 
   @Override
   public String toString() {
-    return "FooLintIssuesLoaderSensor";
+    return "PdkLintIssuesLoaderSensor";
   }
 
-  private class FooLintError {
+  private class PdkLintError {
 
     private final String type;
     private final String description;
     private final String filePath;
     private final int line;
 
-    public FooLintError(final String type, final String description, final String filePath, final int line) {
+    public PdkLintError(final String type, final String description, final String filePath, final int line) {
       this.type = type;
       this.description = description;
       this.filePath = filePath;
@@ -193,17 +188,17 @@ public class FooLintIssuesLoaderSensor implements Sensor {
     }
   }
 
-  private class FooLintAnalysisResultsParser {
+  private class PdkLintAnalysisResultsParser {
 
-    public List<FooLintError> parse(final File file) throws XMLStreamException {
+    public List<PdkLintError> parse(final File file) throws XMLStreamException {
       LOGGER.info("Parsing file {}", file.getAbsolutePath());
 
-      // as the goal of this example is not to demonstrate how to parse an xml file we return an hard coded list of FooError
+      // as the goal of this example is not to demonstrate how to parse an xml file we return an hard coded list of PdkError
 
-      FooLintError fooError1 = new FooLintError("ExampleRule1", "More precise description of the error", "manifests/init.pp", 1);
-      FooLintError fooError2 = new FooLintError("ExampleRule2", "More precise description of the error", "manifests/init.pp", 3);
+      PdkLintError pdkError1 = new PdkLintError("ExampleRule1", "More precise description of the error", "manifests/init.pp", 1);
+      PdkLintError pdkError2 = new PdkLintError("ExampleRule2", "More precise description of the error", "manifests/init.pp", 3);
 
-      return Arrays.asList(fooError1, fooError2);
+      return Arrays.asList(pdkError1, pdkError2);
     }
   }
 

@@ -23,7 +23,7 @@ package com.masabi.sonar.plugin.pdk.languages;
 import static org.sonar.api.rules.RulePriority.BLOCKER;
 import static org.sonar.api.rules.RulePriority.CRITICAL;
 import static org.sonar.api.rules.RulePriority.MAJOR;
-import static com.masabi.sonar.plugin.pdk.rules.FooLintRulesDefinition.REPO_KEY;
+import static com.masabi.sonar.plugin.pdk.rules.PdkLintRulesDefinition.REPO_KEY;
 
 import org.sonar.api.profiles.ProfileDefinition;
 import org.sonar.api.profiles.RulesProfile;
@@ -31,16 +31,17 @@ import org.sonar.api.rules.Rule;
 import org.sonar.api.utils.ValidationMessages;
 
 /**
- * Default Quality profile for the projects having files of language "foo"
+ * Default Quality profile for the projects having files of language "pdk"
  */
-public final class FooQualityProfile extends ProfileDefinition {
+public final class PdkQualityProfile extends ProfileDefinition {
 
   @Override
   public RulesProfile createProfile(ValidationMessages validation) {
-    RulesProfile profile = RulesProfile.create("FooLint Rules", FooLanguage.KEY);
+    RulesProfile profile = RulesProfile.create("PDK Rules", PdkLanguage.KEY);
     profile.activateRule(Rule.create(REPO_KEY, "ExampleRule1"), BLOCKER);
     profile.activateRule(Rule.create(REPO_KEY, "ExampleRule2"), MAJOR);
     profile.activateRule(Rule.create(REPO_KEY, "ExampleRule3"), CRITICAL);
     return profile;
   }
 }
+

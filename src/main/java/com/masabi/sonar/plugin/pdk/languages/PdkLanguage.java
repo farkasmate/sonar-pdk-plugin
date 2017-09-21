@@ -26,28 +26,25 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.sonar.api.config.Settings;
 import org.sonar.api.resources.AbstractLanguage;
-import com.masabi.sonar.plugin.pdk.settings.FooLanguageProperties;
+import com.masabi.sonar.plugin.pdk.settings.PdkLanguageProperties;
 
-/**
- * This class defines the fictive Foo language.
- */
-public final class FooLanguage extends AbstractLanguage {
+public final class PdkLanguage extends AbstractLanguage {
 
-  public static final String NAME = "Pdk";
+  public static final String NAME = "PDK";
   public static final String KEY = "pdk";
 
   private final Settings settings;
 
-  public FooLanguage(Settings settings) {
+  public PdkLanguage(Settings settings) {
     super(KEY, NAME);
     this.settings = settings;
   }
 
   @Override
   public String[] getFileSuffixes() {
-    String[] suffixes = filterEmptyStrings(settings.getStringArray(FooLanguageProperties.FILE_SUFFIXES_KEY));
+    String[] suffixes = filterEmptyStrings(settings.getStringArray(PdkLanguageProperties.FILE_SUFFIXES_KEY));
     if (suffixes.length == 0) {
-      suffixes = StringUtils.split(FooLanguageProperties.FILE_SUFFIXES_DEFAULT_VALUE, ",");
+      suffixes = StringUtils.split(PdkLanguageProperties.FILE_SUFFIXES_DEFAULT_VALUE, ",");
     }
     return suffixes;
   }

@@ -27,12 +27,12 @@ import java.util.List;
 import org.sonar.api.config.PropertyDefinition;
 import org.sonar.api.resources.Qualifiers;
 
-public class FooLanguageProperties {
+public class PdkLanguageProperties {
 
   public static final String FILE_SUFFIXES_KEY = "sonar.pdk.file.suffixes";
   public static final String FILE_SUFFIXES_DEFAULT_VALUE = ".pp,.rb,.epp,.erb,.yaml,.yml,.eyaml,.json";
 
-  private FooLanguageProperties() {
+  private PdkLanguageProperties() {
     // only statics
   }
 
@@ -47,3 +47,4 @@ public class FooLanguageProperties {
   }
 
 }
+

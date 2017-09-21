@@ -25,17 +25,17 @@ import java.nio.charset.StandardCharsets;
 
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.api.server.rule.RulesDefinitionXmlLoader;
-import com.masabi.sonar.plugin.pdk.languages.FooLanguage;
+import com.masabi.sonar.plugin.pdk.languages.PdkLanguage;
 
-public final class FooLintRulesDefinition implements RulesDefinition {
+public final class PdkLintRulesDefinition implements RulesDefinition {
 
   private static final String PATH_TO_RULES_XML = "/example/pdklint-rules.xml";
 
   protected static final String KEY = "pdklint";
   protected static final String NAME = "PdkLint";
 
-  public static final String REPO_KEY = FooLanguage.KEY + "-" + KEY;
-  protected static final String REPO_NAME = FooLanguage.KEY + "-" + NAME;
+  public static final String REPO_KEY = PdkLanguage.KEY + "-" + KEY;
+  protected static final String REPO_NAME = PdkLanguage.KEY + "-" + NAME;
 
   protected String rulesDefinitionFilePath() {
     return PATH_TO_RULES_XML;
@@ -55,7 +55,8 @@ public final class FooLintRulesDefinition implements RulesDefinition {
 
   @Override
   public void define(Context context) {
-    defineRulesForLanguage(context, REPO_KEY, REPO_NAME, FooLanguage.KEY);
+    defineRulesForLanguage(context, REPO_KEY, REPO_NAME, PdkLanguage.KEY);
   }
 
 }
+
