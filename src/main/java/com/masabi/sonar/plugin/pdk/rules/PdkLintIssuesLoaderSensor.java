@@ -20,6 +20,11 @@
  */
 package com.masabi.sonar.plugin.pdk.rules;
 
+import com.masabi.sonar.plugin.pdk.languages.PdkLanguage;
+import com.masabi.sonar.plugin.pdk.utils.PdkError;
+import com.masabi.sonar.plugin.pdk.utils.PdkExecutor;
+import com.masabi.sonar.plugin.pdk.utils.PdkJunitResultsParser;
+
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
@@ -38,7 +43,6 @@ import org.sonar.api.config.Settings;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
-import com.masabi.sonar.plugin.pdk.languages.PdkLanguage;
 
 public class PdkLintIssuesLoaderSensor implements Sensor {
 
@@ -50,12 +54,15 @@ public class PdkLintIssuesLoaderSensor implements Sensor {
   protected final FileSystem fileSystem;
   protected SensorContext context;
 
+  private PdkExecutor pdkExecutor;
+
   /**
    * Use of IoC to get Settings, FileSystem, RuleFinder and ResourcePerspectives
    */
   public PdkLintIssuesLoaderSensor(final Settings settings, final FileSystem fileSystem) {
     this.settings = settings;
     this.fileSystem = fileSystem;
+    this.pdkExecutor = new PdkExecutor();
   }
 
   @Override
@@ -79,6 +86,7 @@ public class PdkLintIssuesLoaderSensor implements Sensor {
 
   @Override
   public void execute(final SensorContext context) {
+    pdkExecutor.execute();
     if (!StringUtils.isEmpty(getReportPath())) {
       this.context = context;
       String reportPath = getReportPath();
@@ -93,14 +101,14 @@ public class PdkLintIssuesLoaderSensor implements Sensor {
 
   protected void parseAndSaveResults(final File file) throws XMLStreamException {
     LOGGER.info("(mock) Parsing Analysis Results");
-    PdkLintAnalysisResultsParser parser = new PdkLintAnalysisResultsParser();
-    List<PdkLintError> errors = parser.parse(file);
-    for (PdkLintError error : errors) {
+    PdkJunitResultsParser parser = new PdkJunitResultsParser();
+    List<PdkError> errors = parser.parse(file);
+    for (PdkError error : errors) {
       getResourceAndSaveIssue(error);
     }
   }
 
-  private void getResourceAndSaveIssue(final PdkLintError error) {
+  private void getResourceAndSaveIssue(final PdkError error) {
     LOGGER.debug(error.toString());
 
     InputFile inputFile = fileSystem.inputFile(
@@ -142,64 +150,5 @@ public class PdkLintIssuesLoaderSensor implements Sensor {
   public String toString() {
     return "PdkLintIssuesLoaderSensor";
   }
-
-  private class PdkLintError {
-
-    private final String type;
-    private final String description;
-    private final String filePath;
-    private final int line;
-
-    public PdkLintError(final String type, final String description, final String filePath, final int line) {
-      this.type = type;
-      this.description = description;
-      this.filePath = filePath;
-      this.line = line;
-    }
-
-    public String getType() {
-      return type;
-    }
-
-    public String getDescription() {
-      return description;
-    }
-
-    public String getFilePath() {
-      return filePath;
-    }
-
-    public int getLine() {
-      return line;
-    }
-
-    @Override
-    public String toString() {
-      StringBuilder s = new StringBuilder();
-      s.append(type);
-      s.append("|");
-      s.append(description);
-      s.append("|");
-      s.append(filePath);
-      s.append("(");
-      s.append(line);
-      s.append(")");
-      return s.toString();
-    }
-  }
-
-  private class PdkLintAnalysisResultsParser {
-
-    public List<PdkLintError> parse(final File file) throws XMLStreamException {
-      LOGGER.info("Parsing file {}", file.getAbsolutePath());
-
-      // as the goal of this example is not to demonstrate how to parse an xml file we return an hard coded list of PdkError
-
-      PdkLintError pdkError1 = new PdkLintError("ExampleRule1", "More precise description of the error", "manifests/init.pp", 1);
-      PdkLintError pdkError2 = new PdkLintError("ExampleRule2", "More precise description of the error", "manifests/init.pp", 3);
-
-      return Arrays.asList(pdkError1, pdkError2);
-    }
-  }
-
 }
+
