@@ -20,10 +20,10 @@
  */
 package com.masabi.sonar.plugin.pdk.languages;
 
-import static org.sonar.api.rules.RulePriority.BLOCKER;
-import static org.sonar.api.rules.RulePriority.CRITICAL;
-import static org.sonar.api.rules.RulePriority.MAJOR;
 import static com.masabi.sonar.plugin.pdk.rules.PdkLintRulesDefinition.REPO_KEY;
+
+import static org.sonar.api.rules.RulePriority.MAJOR;
+import static org.sonar.api.rules.RulePriority.MINOR;
 
 import org.sonar.api.profiles.ProfileDefinition;
 import org.sonar.api.profiles.RulesProfile;
@@ -38,9 +38,10 @@ public final class PdkQualityProfile extends ProfileDefinition {
   @Override
   public RulesProfile createProfile(ValidationMessages validation) {
     RulesProfile profile = RulesProfile.create("PDK Rules", PdkLanguage.KEY);
-    profile.activateRule(Rule.create(REPO_KEY, "ExampleRule1"), BLOCKER);
-    profile.activateRule(Rule.create(REPO_KEY, "ExampleRule2"), MAJOR);
-    profile.activateRule(Rule.create(REPO_KEY, "ExampleRule3"), CRITICAL);
+
+    profile.activateRule(Rule.create(REPO_KEY, "pdk:generic"), MAJOR);
+    profile.activateRule(Rule.create(REPO_KEY, "puppet-lint:warning"), MINOR);
+
     return profile;
   }
 }

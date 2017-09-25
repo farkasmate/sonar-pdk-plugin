@@ -20,9 +20,11 @@
  */
 package com.masabi.sonar.plugin.pdk.utils;
 
+import com.masabi.sonar.plugin.pdk.settings.PdkRules;
 import com.masabi.sonar.plugin.pdk.utils.PdkError;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -47,59 +49,60 @@ public class PdkJunitResultsParser {
     List<PdkError> errors = new ArrayList<PdkError>();
 
     try {
-    DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-    DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-    Document results = dBuilder.parse(file);
-    results.getDocumentElement().normalize();
+      DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+      DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+      Document results = dBuilder.parse(file);
+      results.getDocumentElement().normalize();
 
-    NodeList failures = results.getElementsByTagName("failure");
-    for (int i = 0; i < failures.getLength(); i++) {
-      Node failure = failures.item(i);
+      NodeList failures = results.getElementsByTagName("failure");
+      for (int i = 0; i < failures.getLength(); i++) {
+        Node failure = failures.item(i);
 
-      String name = failure
-        .getParentNode()
-        .getParentNode()
-        .getAttributes()
-        .getNamedItem("name")
-        .getNodeValue();
+        String name = failure
+          .getParentNode()
+          .getParentNode()
+          .getAttributes()
+          .getNamedItem("name")
+          .getNodeValue();
 
-      String severity = failure
-        .getAttributes()
-        .getNamedItem("type")
-        .getNodeValue();
+        String severity = failure
+          .getAttributes()
+          .getNamedItem("type")
+          .getNodeValue();
 
-      String errorKey = name + ":" + severity;
+        String errorKey = name + ":" + severity;
 
-      String message = failure
-        .getAttributes()
-        .getNamedItem("message")
-        .getNodeValue();
+        String message = failure
+          .getAttributes()
+          .getNamedItem("message")
+          .getNodeValue();
 
-      String testCaseName = failure
-        .getParentNode()
-        .getAttributes()
-        .getNamedItem("name")
-        .getNodeValue();
+        String testCaseName = failure
+          .getParentNode()
+          .getAttributes()
+          .getNamedItem("name")
+          .getNodeValue();
 
-      String relativeFilePath = testCaseName
-        .split(":")[0];
+        String relativeFilePath = testCaseName
+          .split(":")[0];
 
-      int fileLine = Integer.parseInt(
-        testCaseName
-        .split(":")[1]);
+        int fileLine = Integer.parseInt(
+          testCaseName
+          .split(":")[1]);
 
-      PdkError error = new PdkError("ExampleRule1", message, relativeFilePath, fileLine);
-      errors.add(error);
-    }
+        if (!PdkRules.isValidKey(errorKey)) {
+          LOGGER.debug("Rule '{}' not found, falling back to '{}'", errorKey, PdkRules.GENERIC_ERROR_KEY);
+          errorKey = PdkRules.GENERIC_ERROR_KEY;
+        }
+
+        PdkError error = new PdkError(errorKey, message, relativeFilePath, fileLine);
+        errors.add(error);
+      }
     } catch (Exception e) {
       e.printStackTrace();
     }
 
     return errors;
-    //PdkError pdkError1 = new PdkError("ExampleRule1", "More precise description of the error", "manifests/init.pp", 1);
-    //PdkError pdkError2 = new PdkError("ExampleRule2", "More precise description of the error", "manifests/init.pp", 3);
-
-    //return Arrays.asList(pdkError1, pdkError2);
   }
 }
 

@@ -29,7 +29,7 @@ import com.masabi.sonar.plugin.pdk.languages.PdkLanguage;
 
 public final class PdkLintRulesDefinition implements RulesDefinition {
 
-  private static final String PATH_TO_RULES_XML = "/example/pdklint-rules.xml";
+  private static final String PATH_TO_RULES_XML = "/rules.xml";
 
   protected static final String KEY = "pdklint";
   protected static final String NAME = "PdkLint";
