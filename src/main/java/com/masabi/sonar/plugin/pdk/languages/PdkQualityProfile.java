@@ -40,6 +40,7 @@ public final class PdkQualityProfile extends ProfileDefinition {
     RulesProfile profile = RulesProfile.create("PDK Rules", PdkLanguage.KEY);
 
     profile.activateRule(Rule.create(REPO_KEY, "pdk:generic"), MAJOR);
+    profile.activateRule(Rule.create(REPO_KEY, "puppet-lint:error"), MAJOR);
     profile.activateRule(Rule.create(REPO_KEY, "puppet-lint:warning"), MINOR);
 
     return profile;
