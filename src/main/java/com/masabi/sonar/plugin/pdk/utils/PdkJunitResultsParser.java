@@ -95,7 +95,7 @@ public class PdkJunitResultsParser {
         }
 
         if (!PdkRules.isValidKey(errorKey)) {
-          LOGGER.debug("Rule '{}' not found, falling back to '{}'", errorKey, PdkRules.GENERIC_ERROR_KEY);
+          LOGGER.warn("Rule '{}' not found, falling back to '{}'", errorKey, PdkRules.GENERIC_ERROR_KEY);
           errorKey = PdkRules.GENERIC_ERROR_KEY;
         }
 
