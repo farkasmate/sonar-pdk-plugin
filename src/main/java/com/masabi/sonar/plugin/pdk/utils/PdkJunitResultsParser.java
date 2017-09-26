@@ -70,6 +70,10 @@ public class PdkJunitResultsParser {
           .getNamedItem("type")
           .getNodeValue();
 
+        if (severity != null) {
+          severity = severity.split(":")[0].toLowerCase();
+        }
+
         String errorKey = name + ":" + severity;
 
         String message = failure
