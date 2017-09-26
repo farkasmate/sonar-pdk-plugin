@@ -21,7 +21,9 @@
 package com.masabi.sonar.plugin.pdk.utils;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStreamReader;
+
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
 
@@ -30,6 +32,14 @@ public class PdkExecutor {
   private static final Logger LOGGER = Loggers.get(PdkExecutor.class);
 
   public void execute() {
+    LOGGER.info("Updating bundle");
+    executeCommand("bundle update");
+
+    File junitDir = new File("./junit/");
+    if (!junitDir.exists()) {
+      junitDir.mkdir();
+    }
+
     LOGGER.info("Executing 'pdk validate'");
     executeCommand("pdk validate --format=junit:junit/validate.xml");
 

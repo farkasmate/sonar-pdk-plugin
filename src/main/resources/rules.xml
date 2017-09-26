@@ -3,25 +3,21 @@
   <rule>
     <key>pdk:generic</key>
     <name>pdk:generic</name>
-    <internalKey>pdk:generic</internalKey>
-    <description>PDK uncategorized issue</description>
+    <description>This version of PDK Plugin doesn't recognize this issue. You might need to update the plugin.</description>
     <type>BUG</type>
     <severity>MAJOR</severity>
     <cardinality>SINGLE</cardinality>
-    <status>READY</status>
     <tag>uncategorized</tag>
     <remediationFunction>CONSTANT_ISSUE</remediationFunction>
-    <remediationFunctionBaseEffort>2min</remediationFunctionBaseEffort>
+    <remediationFunctionBaseEffort>30min</remediationFunctionBaseEffort>
   </rule>
   <rule>
     <key>puppet-lint:error</key>
     <name>puppet-lint:error</name>
-    <internalKey>puppet-lint:error</internalKey>
     <description>Error from puppet-lint</description>
     <type>CODE_SMELL</type>
     <severity>MAJOR</severity>
     <cardinality>SINGLE</cardinality>
-    <status>READY</status>
     <tag>puppet-lint</tag>
     <remediationFunction>CONSTANT_ISSUE</remediationFunction>
     <remediationFunctionBaseEffort>2min</remediationFunctionBaseEffort>
@@ -29,12 +25,10 @@
   <rule>
     <key>puppet-lint:warning</key>
     <name>puppet-lint:warning</name>
-    <internalKey>puppet-lint:warning</internalKey>
     <description>Warning from puppet-lint</description>
     <type>CODE_SMELL</type>
     <severity>MINOR</severity>
     <cardinality>SINGLE</cardinality>
-    <status>READY</status>
     <tag>puppet-lint</tag>
     <remediationFunction>CONSTANT_ISSUE</remediationFunction>
     <remediationFunctionBaseEffort>2min</remediationFunctionBaseEffort>

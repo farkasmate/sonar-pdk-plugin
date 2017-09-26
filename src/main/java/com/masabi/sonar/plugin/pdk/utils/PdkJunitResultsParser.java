@@ -86,9 +86,13 @@ public class PdkJunitResultsParser {
         String relativeFilePath = testCaseName
           .split(":")[0];
 
-        int fileLine = Integer.parseInt(
-          testCaseName
-          .split(":")[1]);
+        String[] testCaseNameArray  = testCaseName
+          .split(":");
+
+        int fileLine = 0;
+        if (testCaseNameArray.length > 1) {
+          fileLine = Integer.parseInt(testCaseNameArray[1]);
+        }
 
         if (!PdkRules.isValidKey(errorKey)) {
           LOGGER.debug("Rule '{}' not found, falling back to '{}'", errorKey, PdkRules.GENERIC_ERROR_KEY);
