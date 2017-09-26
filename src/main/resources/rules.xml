@@ -12,6 +12,39 @@
     <remediationFunctionBaseEffort>30min</remediationFunctionBaseEffort>
   </rule>
   <rule>
+    <key>metadata-json-lint:error</key>
+    <name>metadata-json-lint:error</name>
+    <description>Error from metadata-json-lint</description>
+    <type>CODE_SMELL</type>
+    <severity>MAJOR</severity>
+    <cardinality>SINGLE</cardinality>
+    <tag>metadata-json-lint</tag>
+    <remediationFunction>CONSTANT_ISSUE</remediationFunction>
+    <remediationFunctionBaseEffort>2min</remediationFunctionBaseEffort>
+  </rule>
+  <rule>
+    <key>metadata-json-lint:warning</key>
+    <name>metadata-json-lint:warning</name>
+    <description>Warning from metadata-json-lint</description>
+    <type>CODE_SMELL</type>
+    <severity>MINOR</severity>
+    <cardinality>SINGLE</cardinality>
+    <tag>metadata-json-lint</tag>
+    <remediationFunction>CONSTANT_ISSUE</remediationFunction>
+    <remediationFunctionBaseEffort>2min</remediationFunctionBaseEffort>
+  </rule>
+  <rule>
+    <key>metadata-syntax:error</key>
+    <name>metadata-syntax:error</name>
+    <description>Error from metadata-syntax</description>
+    <type>BUG</type>
+    <severity>MAJOR</severity>
+    <cardinality>SINGLE</cardinality>
+    <tag>metadata-syntax</tag>
+    <remediationFunction>CONSTANT_ISSUE</remediationFunction>
+    <remediationFunctionBaseEffort>5min</remediationFunctionBaseEffort>
+  </rule>
+  <rule>
     <key>puppet-lint:error</key>
     <name>puppet-lint:error</name>
     <description>Error from puppet-lint</description>
@@ -32,5 +65,71 @@
     <tag>puppet-lint</tag>
     <remediationFunction>CONSTANT_ISSUE</remediationFunction>
     <remediationFunctionBaseEffort>2min</remediationFunctionBaseEffort>
+  </rule>
+  <rule>
+    <key>puppet-syntax:error</key>
+    <name>puppet-syntax:error</name>
+    <description>Error from puppet-syntax</description>
+    <type>BUG</type>
+    <severity>BLOCKER</severity>
+    <cardinality>SINGLE</cardinality>
+    <tag>puppet-syntax</tag>
+    <remediationFunction>CONSTANT_ISSUE</remediationFunction>
+    <remediationFunctionBaseEffort>5min</remediationFunctionBaseEffort>
+  </rule>
+  <rule>
+    <key>rubocop:convention</key>
+    <name>rubocop:convention</name>
+    <description>Convention issue from rubocop</description>
+    <type>CODE_SMELL</type>
+    <severity>MINOR</severity>
+    <cardinality>SINGLE</cardinality>
+    <tag>rubocop</tag>
+    <remediationFunction>CONSTANT_ISSUE</remediationFunction>
+    <remediationFunctionBaseEffort>2min</remediationFunctionBaseEffort>
+  </rule>
+  <rule>
+    <key>rubocop:error</key>
+    <name>rubocop:error</name>
+    <description>Error from rubocop</description>
+    <type>BUG</type>
+    <severity>BLOCKER</severity>
+    <cardinality>SINGLE</cardinality>
+    <tag>rubocop</tag>
+    <remediationFunction>CONSTANT_ISSUE</remediationFunction>
+    <remediationFunctionBaseEffort>5min</remediationFunctionBaseEffort>
+  </rule>
+  <rule>
+    <key>rubocop:fatal</key>
+    <name>rubocop:fatal</name>
+    <description>Fatal issue from rubocop</description>
+    <type>BUG</type>
+    <severity>BLOCKER</severity>
+    <cardinality>SINGLE</cardinality>
+    <tag>rubocop</tag>
+    <remediationFunction>CONSTANT_ISSUE</remediationFunction>
+    <remediationFunctionBaseEffort>5min</remediationFunctionBaseEffort>
+  </rule>
+  <rule>
+    <key>rubocop:refactor</key>
+    <name>rubocop:refactor</name>
+    <description>Refactor issue from rubocop</description>
+    <type>CODE_SMELL</type>
+    <severity>INFO</severity>
+    <cardinality>SINGLE</cardinality>
+    <tag>rubocop</tag>
+    <remediationFunction>CONSTANT_ISSUE</remediationFunction>
+    <remediationFunctionBaseEffort>2min</remediationFunctionBaseEffort>
+  </rule>
+  <rule>
+    <key>rubocop:warning</key>
+    <name>rubocop:warning</name>
+    <description>Warning from rubocop</description>
+    <type>CODE_SMELL</type>
+    <severity>MAJOR</severity>
+    <cardinality>SINGLE</cardinality>
+    <tag>rubocop</tag>
+    <remediationFunction>CONSTANT_ISSUE</remediationFunction>
+    <remediationFunctionBaseEffort>5min</remediationFunctionBaseEffort>
   </rule>
 </pdklint-rules>
