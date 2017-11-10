@@ -22,7 +22,12 @@ package com.masabi.sonar.plugin.pdk.utils;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.InterruptedException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
@@ -31,7 +36,12 @@ public class PdkExecutor {
 
   private static final Logger LOGGER = Loggers.get(PdkExecutor.class);
 
-  public void execute() {
+  private static final String VALIDATE_PATH = "junit/validate.xml";
+  private static final String TEST_UNIT_PATH = "junit/test_unit.xml";
+
+  private static final String[] reports = { VALIDATE_PATH, TEST_UNIT_PATH };
+
+  public List<String> execute() {
     LOGGER.info("Updating bundle");
     executeCommand("bundle update");
 
@@ -41,10 +51,12 @@ public class PdkExecutor {
     }
 
     LOGGER.info("Executing 'pdk validate'");
-    executeCommand("pdk validate --format=junit:junit/validate.xml");
+    executeCommand("pdk validate --format=junit:" + VALIDATE_PATH);
 
-    //LOGGER.info("Executing 'pdk test unit'");
-    //executeCommand("pdk test unit --format=junit:junit/test_unit.xml");
+    LOGGER.info("Executing 'pdk test unit'");
+    executeCommand("pdk test unit --format=junit:" + TEST_UNIT_PATH);
+
+    return Arrays.asList(reports);
   }
 
   private void executeCommand(String command) {
@@ -60,8 +72,12 @@ public class PdkExecutor {
       while ((line = reader.readLine())!= null) {
         LOGGER.debug(line);
       }
-    } catch (Exception e) {
-      e.printStackTrace();
+    } catch (InterruptedException e) {
+      LOGGER.info("Command execution has been interrupted: " + command);
+      LOGGER.debug(e.getMessage());
+    } catch (IOException e) {
+      LOGGER.info("Failed to run command, check if the executable is available in your PATH: " + command);
+      LOGGER.debug(e.getMessage());
     }
   }
 }

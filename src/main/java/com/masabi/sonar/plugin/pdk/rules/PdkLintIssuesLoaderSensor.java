@@ -26,8 +26,11 @@ import com.masabi.sonar.plugin.pdk.utils.PdkExecutor;
 import com.masabi.sonar.plugin.pdk.utils.PdkJunitResultsParser;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.xml.stream.XMLStreamException;
 
@@ -48,7 +51,7 @@ public class PdkLintIssuesLoaderSensor implements Sensor {
 
   private static final Logger LOGGER = Loggers.get(PdkLintIssuesLoaderSensor.class);
 
-  protected static final String REPORT_PATH_KEY = "sonar.pdklint.reportPath";
+  protected static final String REPORT_PATHS_KEY = "sonar.pdk.reportPaths";
 
   protected final Settings settings;
   protected final FileSystem fileSystem;
@@ -71,25 +74,32 @@ public class PdkLintIssuesLoaderSensor implements Sensor {
     descriptor.onlyOnLanguage(PdkLanguage.KEY);
   }
 
-  protected String reportPathKey() {
-    return REPORT_PATH_KEY;
+  protected String reportPathsKey() {
+    return REPORT_PATHS_KEY;
   }
 
-  protected String getReportPath() {
-    String reportPath = settings.getString(reportPathKey());
-    if (!StringUtils.isEmpty(reportPath)) {
-      return reportPath;
+  protected List<String> getReportPaths() {
+    String reportPaths = settings.getString(reportPathsKey());
+    if (!StringUtils.isEmpty(reportPaths)) {
+      return Arrays.asList(reportPaths.split(","));
     } else {
-      return null;
+      return new ArrayList<String>();
     }
   }
 
   @Override
   public void execute(final SensorContext context) {
-    pdkExecutor.execute();
-    if (!StringUtils.isEmpty(getReportPath())) {
-      this.context = context;
-      String reportPath = getReportPath();
+    this.context = context;
+
+    List<String> generatedReportPaths = pdkExecutor.execute();
+
+    List<String> reportsList = new ArrayList<String>();
+    reportsList.addAll(generatedReportPaths);
+    reportsList.addAll(getReportPaths());
+
+    Set<String> reportsSet = new HashSet<String>(reportsList);
+
+    for (String reportPath : reportsSet) {
       File analysisResultsFile = new File(reportPath);
       try {
         parseAndSaveResults(analysisResultsFile);
@@ -100,7 +110,7 @@ public class PdkLintIssuesLoaderSensor implements Sensor {
   }
 
   protected void parseAndSaveResults(final File file) throws XMLStreamException {
-    LOGGER.info("(mock) Parsing Analysis Results");
+    LOGGER.info("Parsing Analysis Results");
     PdkJunitResultsParser parser = new PdkJunitResultsParser();
     List<PdkError> errors = parser.parse(file);
     for (PdkError error : errors) {
